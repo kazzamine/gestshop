@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Void_;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Broadcast]
-class User
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -70,21 +72,11 @@ class User
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
     public function setUsername(string $username): static
     {
         $this->username = $username;
 
         return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
     }
 
     public function setPassword(string $password): static
@@ -264,5 +256,74 @@ class User
         }
 
         return $this;
+    }
+
+    #[ORM\Column(type: Types::JSON)]
+    private $roles = [];
+
+    /**
+     * Set the roles for the user.
+     *
+     * @param array $roles
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+     
+     /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        // Ensure that the user always has at least one role
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password; // Assuming you have a property named 'password'
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        // You might need this if you're not using a modern password hashing algorithm
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return $this->username; // Assuming you have a property named 'username'
+    }
+ /**
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username; // Assuming you have a property named 'username'
+    }
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials():void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // For example, $this->plainPassword = null;
     }
 }
