@@ -1,4 +1,3 @@
-import './bootstrap.js';
-
+import './styles/navbar.css'
 import './styles/app.css';
 

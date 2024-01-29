@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            
             <link rel="stylesheet" href={{ asset("bootstrap/bootstrap.min.css") }} />
         {% endblock %}
 
@@ -13,6 +15,7 @@
         {% include("./attachements/navbar.html.twig")  %}
         {% block body %}{% endblock %}
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
             <script src={{ asset("bootstrap/bootstrap.min.js") }}> </script>
         {% endblock %}
     </body>

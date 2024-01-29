@@ -1,5 +1,5 @@
 
-    <link rel="stylesheet" href={{ asset("styles/navbar.css") }} />
+    {{encore_entry_link_tags('navbar')}}
     <div class="main-navbar shadow-sm sticky-top">
         <div class="top-navbar">
             <div class="container-fluid">
@@ -58,10 +58,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href={{ asset("/") }} >Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">All Categories</a>
+                            <a class="nav-link" href={{ asset("/testt") }}>All Categories</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">New Arrivals</a>
