@@ -13,7 +13,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route('/api/login', name: 'app_login',methods:'POST')]
+    #[Route('/loginpage','loginpage')]
+    public function loginpage()
+    {
+        return $this->render('login/index.html.twig');
+    }
+
+    #[Route('/login', name: 'app_login')]
     public function index(Request $request,JWTTokenManagerInterface $jwtManager): Response
     {
         $user=$this->getUser();
@@ -21,6 +27,7 @@ class LoginController extends AbstractController
             throw new BadCredentialsException('invalid credentials');
         }
         $userToken=$jwtManager->create($user);
-        return $this->json(['jwtToken'=>$userToken]);
+        return $this->json(['jwtToken'=>$userToken,
+        'username'=>$user->getUserIdentifier()]);
     }
 }
