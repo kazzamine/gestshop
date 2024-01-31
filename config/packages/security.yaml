@@ -23,6 +23,8 @@ security:
                 check_path: /login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            logout:
+                path: /logout
             entry_point: App\security\AuthentificationEntryPoint
             access_denied_handler: App\security\AccessDenied
             access_denied_url: /error403
