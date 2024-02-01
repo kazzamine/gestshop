@@ -45,6 +45,7 @@ class LoginController extends AbstractController
         return $this->json(['jwtToken'=>$userToken,
         'username'=>$user->getUserIdentifier()]);
     }
+    
     #[Route('/logout',name:'logout')]
     public function logout(Client $redis,SessionInterface $session)
     {   
